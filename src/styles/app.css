@@ -1,0 +1,319 @@
+/* Global base, shell grid, and shared primitives. Component-specific styles live in *.module.css. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 14px/20px var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ---------- Shell ---------- */
+
+.shell {
+  display: grid;
+  grid-template-columns: var(--rail-w) minmax(0, 1fr);
+  grid-template-rows: var(--topbar-h) minmax(0, 1fr);
+  grid-template-areas:
+    "rail top"
+    "rail canvas";
+  height: 100dvh;
+  min-height: 100dvh;
+}
+
+.shell[data-rail="closed"] {
+  grid-template-columns: 0px minmax(0, 1fr);
+}
+
+.shell__rail {
+  grid-area: rail;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.shell__top {
+  grid-area: top;
+  min-width: 0;
+}
+
+.shell__canvas {
+  grid-area: canvas;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+
+.shell__scrim {
+  display: none;
+}
+
+/* Excalidraw fills its containing block, so the wrapper must have a definite size. */
+.board-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+/* Excalidraw's tab panels grow with their content; ours scroll inside the sidebar instead. */
+.excalidraw .sidebar-tabs-root {
+  min-height: 0;
+}
+
+.excalidraw .sidebar-tabs-root [role="tabpanel"] {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 var(--s-3);
+}
+
+/* Two fixed tabs that share the header width (Excalidraw's auto-fit grid collapses inside the flex header). */
+.excalidraw .sdb-sidebar [role="tablist"] {
+  flex: 1 1 auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-2);
+}
+
+.excalidraw .sdb-sidebar .sidebar-tab-trigger {
+  font-family: var(--font-ui);
+  font-weight: 500;
+}
+
+.canvas-loading {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(var(--rule) 1px, transparent 1px) 0 0 / 16px 16px var(--paper);
+}
+
+@media (max-width: 767px) {
+  .shell,
+  .shell[data-rail="closed"] {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "top"
+      "canvas";
+  }
+
+  .shell__rail {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(var(--rail-w), 86vw);
+    z-index: 20;
+    transform: translateX(-100%);
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .shell[data-rail="open"] .shell__rail {
+    transform: translateX(0);
+  }
+
+  .shell[data-rail="open"] .shell__scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 19;
+    background: var(--scrim);
+    border: 0;
+    padding: 0;
+  }
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  height: 36px;
+  padding: 0 var(--s-3);
+  border: 1px solid transparent;
+  border-radius: var(--r-control);
+  background: transparent;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: var(--wash);
+}
+
+.btn--danger {
+  background: var(--danger);
+  color: var(--danger-ink);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+/* 36px visual square, 44px hit area */
+.icon-btn {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-control);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.icon-btn::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+}
+
+.icon-btn:hover {
+  background: var(--wash);
+}
+
+.icon-btn:active {
+  transform: translateY(1px);
+}
+
+/* ---------- Inputs ---------- */
+
+.input {
+  width: 100%;
+  height: 36px;
+  padding: 0 var(--s-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-control);
+  background: var(--sheet);
+}
+
+.input::placeholder {
+  color: var(--pencil);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+/* ---------- Text ---------- */
+
+.section-label {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--pencil);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.error-text {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--danger);
+}
+
+/* ---------- Skeleton ---------- */
+
+.skeleton {
+  background: linear-gradient(90deg, var(--skeleton) 0%, var(--skeleton-shine) 50%, var(--skeleton) 100%) 0 0 / 200%
+    100%;
+  border-radius: var(--r-thumb);
+  animation: shimmer 1.4s var(--ease) infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

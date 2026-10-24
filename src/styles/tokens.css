@@ -1,0 +1,126 @@
+/* Design tokens. Source of truth: DESIGN.md (§2 color, §3 type, §5 layout, §6 motion, §7 Excalidraw bridge). */
+
+:root {
+  --paper: #fafafa;
+  --sheet: #ffffff;
+  --raised: #ffffff;
+  --ink: #18181b;
+  --pencil: #71717a;
+  --rule: #e4e4e7;
+  --wash: #f4f4f5;
+  --accent: #1f7a8c;
+  --accent-hover: #19677a;
+  --accent-ink: #ffffff;
+  --accent-wash: #e3f1f4;
+  --danger: #b42318;
+  --danger-ink: #ffffff;
+  --tile-hover-border: rgba(24, 24, 27, 0.3);
+  --scrim: rgba(9, 9, 11, 0.4);
+  --shadow-dialog: 0 12px 32px -8px rgba(24, 24, 27, 0.18);
+  --shadow-menu: 0 8px 24px -6px rgba(24, 24, 27, 0.16);
+  --skeleton: #ececee;
+  --skeleton-shine: #f6f6f7;
+
+  --font-ui: "Geist Variable", ui-sans-serif, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 160ms;
+  --dur: 220ms;
+
+  --r-thumb: 6px;
+  --r-control: 8px;
+  --r-tile: 10px;
+  --r-dialog: 14px;
+
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-6: 24px;
+  --s-8: 32px;
+
+  --rail-w: 264px;
+  --topbar-h: 52px;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #09090b;
+    --sheet: #18181b;
+    --raised: #27272a;
+    --ink: #fafafa;
+    --pencil: #a1a1aa;
+    --rule: #27272a;
+    --wash: #27272a;
+    --accent: #4fb3c4;
+    --accent-hover: #6cc2d0;
+    --accent-ink: #09090b;
+    --accent-wash: rgba(79, 179, 196, 0.14);
+    --danger: #f97066;
+    --danger-ink: #09090b;
+    --tile-hover-border: rgba(250, 250, 250, 0.3);
+    --scrim: rgba(9, 9, 11, 0.6);
+    --shadow-dialog: 0 12px 32px -8px rgba(9, 9, 11, 0.6);
+    --shadow-menu: 0 8px 24px -6px rgba(9, 9, 11, 0.5);
+    --skeleton: #222226;
+    --skeleton-shine: #2c2c31;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #09090b;
+  --sheet: #18181b;
+  --raised: #27272a;
+  --ink: #fafafa;
+  --pencil: #a1a1aa;
+  --rule: #27272a;
+  --wash: #27272a;
+  --accent: #4fb3c4;
+  --accent-hover: #6cc2d0;
+  --accent-ink: #09090b;
+  --accent-wash: rgba(79, 179, 196, 0.14);
+  --danger: #f97066;
+  --danger-ink: #09090b;
+  --tile-hover-border: rgba(250, 250, 250, 0.3);
+  --scrim: rgba(9, 9, 11, 0.6);
+  --shadow-dialog: 0 12px 32px -8px rgba(9, 9, 11, 0.6);
+  --shadow-menu: 0 8px 24px -6px rgba(9, 9, 11, 0.5);
+  --skeleton: #222226;
+  --skeleton-shine: #2c2c31;
+  color-scheme: dark;
+}
+
+/* Excalidraw theming bridge: replace its violet with Blueprint Teal. */
+.excalidraw {
+  --color-primary: #1f7a8c;
+  --color-primary-darker: #19677a;
+  --color-primary-darkest: #145463;
+  --color-primary-hover: #19677a;
+  --color-primary-light: #e3f1f4;
+  --color-primary-light-darker: #cfe6eb;
+  --color-selection: #1f7a8c;
+  --color-brand-hover: #19677a;
+  --color-brand-active: #145463;
+  --color-surface-primary-container: #e3f1f4;
+  --color-on-primary-container: #0e3a43;
+  --color-surface-low: #f4f4f5;
+  --ui-font: "Geist Variable", ui-sans-serif, sans-serif;
+}
+
+.excalidraw.theme--dark {
+  --color-primary: #4fb3c4;
+  --color-primary-darker: #6cc2d0;
+  --color-primary-darkest: #8ed1dc;
+  --color-primary-hover: #6cc2d0;
+  --color-primary-light: rgba(79, 179, 196, 0.18);
+  --color-primary-light-darker: rgba(79, 179, 196, 0.26);
+  --color-selection: #2b8a9c;
+  --color-brand-hover: #6cc2d0;
+  --color-brand-active: #8ed1dc;
+  --color-surface-primary-container: #1d3d44;
+  --color-on-primary-container: #d6eef2;
+}

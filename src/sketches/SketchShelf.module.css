@@ -1,0 +1,112 @@
+.shelf {
+  display: grid;
+  gap: var(--s-3);
+  padding: var(--s-1) var(--s-1) var(--s-6);
+  font-family: var(--font-ui);
+  color: var(--ink);
+}
+
+.dropZone {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-2);
+  padding: var(--s-4) var(--s-3);
+  border: 1px dashed var(--rule);
+  border-radius: var(--r-tile);
+  text-align: center;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.dropZone[data-dragging] {
+  background: var(--accent-wash);
+  border-color: var(--accent);
+}
+
+.dropIcon {
+  color: var(--pencil);
+}
+
+.dropText {
+  margin: 0;
+  color: var(--pencil);
+}
+
+.hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--pencil);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  position: relative;
+  min-width: 0;
+}
+
+.tile {
+  display: grid;
+  gap: var(--s-1);
+  width: 100%;
+  padding: var(--s-1);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-tile);
+  background: var(--sheet);
+  cursor: grab;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+
+.tile:hover {
+  border-color: var(--tile-hover-border);
+}
+
+.tile:active {
+  cursor: grabbing;
+}
+
+.thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-thumb);
+  object-fit: cover;
+  background: var(--paper);
+}
+
+.name {
+  overflow: hidden;
+  color: var(--pencil);
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  background: var(--sheet);
+  color: var(--pencil);
+  opacity: 0;
+}
+
+.item:hover .remove,
+.item:focus-within .remove {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .remove {
+    opacity: 1;
+  }
+}
